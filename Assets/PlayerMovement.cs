@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     // These variables (visible in the inspector) are for you to set up to match the right feel
     private float movementSpeed = 12f;
-    private float yawSpeed = 2.0f;
+   [SerializeField] private float yawSpeed = 2.0f;
     private float pitchSpeed = 2.0f;
     private float yawAngle = 0.0f;
     private float pitchAngle = 0.0f;
