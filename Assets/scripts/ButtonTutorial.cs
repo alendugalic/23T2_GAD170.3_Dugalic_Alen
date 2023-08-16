@@ -28,12 +28,10 @@ public class ButtonTutorial : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            return;
-        }
-        {
-
             Debug.Log("Press done");
             tutorialText.enabled = true;
+            return;
         }
+
     }
 }

@@ -4,26 +4,23 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class PlayerRespawn : MonoBehaviour
 {
-    public GameObject player;
-    public Transform respawnPoint;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    void OnCollisionEnter(Collision other)
+    private CharacterController controller;
+    
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Scene currentScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(currentScene.name);
 
+            controller = other.GetComponent<CharacterController>();
+            if (controller != null)
+            {
+                controller.enabled = false;
+            }
+            Vector3 teleportPosition = new Vector3 (37.6f, 7.97f, -27.12f);
+            other.transform.position = teleportPosition;
+            controller.enabled = true;
         }
     }
+   
 }
+

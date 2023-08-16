@@ -6,6 +6,6 @@ public class BolderDestroy : MonoBehaviour
 {
     public void Update()
     {
-        Destroy(gameObject, 4);
+        Destroy(gameObject, 2);
     }
 }
