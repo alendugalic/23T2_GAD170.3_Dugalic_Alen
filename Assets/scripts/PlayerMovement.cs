@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -13,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     // The mouse will let you turn the object, and therefore, the camera.
 
     // These variables (visible in the inspector) are for you to set up to match the right feel
+    public Animator animator;
     public float speed = 12f;
     public float speedH = 2.0f;
     public float speedV = 2.0f;
@@ -37,16 +39,25 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        // If the variable "controller" is empty...
+        animator = GetComponent<Animator>();
         if (controller == null)
         {
-            // ...then this searches the components on the gameobject and gets a reference to the CharacterController class
             controller = GetComponent<CharacterController>();
         }
+        
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            animator.SetBool("IsMoving", true);
+        }
+        else
+        {
+            animator.SetBool("IsMoving", false);
+        }
+
         // These lines let the script rotate the player based on the mouse moving
         yaw += speedH * Input.GetAxis("Mouse X");
         pitch -= speedV * Input.GetAxis("Mouse Y");

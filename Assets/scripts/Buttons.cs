@@ -1,39 +1,50 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Buttons : MonoBehaviour
 {
-    [SerializeField] private bool isPlayerNextToButton = false;
+    public GameObject doorToDestroy;
+    public KeyCode interactKey = KeyCode.E;
+    public Color pressedColor = Color.yellow;
+
+    private bool canInteract = false;
+    private bool buttonPressed = false;
+    private Renderer buttonRenderer;
+    public AudioSource soundEffect;
+    public UIScript uiScript;
+    private void Start()
+    {
+        buttonRenderer = GetComponent<Renderer>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !buttonPressed)
         {
-            isPlayerNextToButton = true;
+            canInteract = true;
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !buttonPressed)
         {
-            isPlayerNextToButton = false;
+            canInteract= false;
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E) && isPlayerNextToButton)
+        if (!buttonPressed && canInteract && Input.GetKeyDown(interactKey))
         {
-            GetComponent<Renderer>().material.color = Color.yellow;
+            Destroy(doorToDestroy);
+            buttonRenderer.material.color = pressedColor;
+            buttonPressed = true;
+            soundEffect.Play();
+            
         }
     }
-    //Particle system.stop() (to end particle gates) 
 }
